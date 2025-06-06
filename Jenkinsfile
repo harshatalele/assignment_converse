@@ -13,17 +13,6 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                bat """
-                    python -m venv ${VENV_DIR}
-                    call ${VENV_DIR}\\Scripts\\activate.bat
-                    python -m pip install --upgrade pip
-                    python -m pip install -r requirements.txt
-                """
-            }
-        }
-
         stage('Run Robot Tests') {
             steps {
                 bat """
