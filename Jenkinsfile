@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         VENV_DIR = '.venv'
-        SONAR_SCANNER_HOME = tool 'SonarQubeScanner'  // Jenkins global tool config
+        SONAR_SCANNER_HOME = tool 'converse_SAST'  // Jenkins global tool config
     }
 
     stages {
