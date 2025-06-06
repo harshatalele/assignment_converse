@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.13.3 on win32)" generated="20250606 18:14:28.569" rpa="false" schemaversion="4">
+<suite id="s1" name="Test Automation" source="E:\Automation\SMSMagic\robot_framework_automation\tests\test_automation.robot">
+<test id="s1-t1" name="Verify user is able to navigate to Automation page" line="14">
+<kw name="Open Browser To Login Page" library="resources" type="SETUP">
+<kw name="Set Selenium Speed" library="SeleniumLibrary">
+<arg>1</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="PASS" starttime="20250606 18:14:29.597" endtime="20250606 18:14:29.597"/>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${url}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20250606 18:14:29.598" level="INFO">Opening browser 'chrome' to base url 'https://app.beconversive.com/app/#/conversive/usecase'.</msg>
+<status status="PASS" starttime="20250606 18:14:29.597" endtime="20250606 18:14:32.138"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20250606 18:14:32.138" endtime="20250606 18:14:33.205"/>
+</kw>
+<kw name="Title Should Be" library="SeleniumLibrary">
+<arg>Conversive</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<msg timestamp="20250606 18:14:34.216" level="INFO">Page title is 'Conversive'.</msg>
+<status status="PASS" starttime="20250606 18:14:33.205" endtime="20250606 18:14:34.216"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="FAIL" starttime="20250606 18:14:34.217" endtime="20250606 18:14:34.891"/>
+</kw>
+<status status="FAIL" starttime="20250606 18:14:29.596" endtime="20250606 18:14:34.891"/>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<msg timestamp="20250606 18:14:38.950" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001CC87A4D2B0&gt;: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')': /session/7c18ef9ddcf0f2ea8b973800f81dcf8d</msg>
+<errors>
+<msg timestamp="20250606 18:14:38.950" level="WARN">Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('&lt;urllib3.connection.HTTPConnection object at 0x000001CC87A4D2B0&gt;: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it')': /session/7c18ef9ddcf0f2ea8b973800f81dcf8d</msg>
+<msg timestamp="20250606 18:14:40.977" level="ERROR">Execution stopped by user.</msg>
+</errors>
+</robot>
