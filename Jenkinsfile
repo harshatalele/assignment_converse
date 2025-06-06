@@ -15,10 +15,7 @@ pipeline {
 
         stage('Run Robot Tests') {
             steps {
-                bat """
-                    call ${VENV_DIR}\\Scripts\\activate.bat
-                    robot -d results tests/
-                """
+                 bat 'robot -d results tests/'
             }
         }
 
