@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout source code from GitHub
-                git 'https://github.com/youruser/robot-project.git'
+                git 'https://github.com/harshatalele/assignment_converse.git'
             }
         }
 
