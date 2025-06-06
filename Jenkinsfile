@@ -21,9 +21,9 @@ pipeline {
         }
         stage('Run Robot Tests') {
             steps {
-                 bat 'robot -d results tests/'
-            }
-        }
+                    bat '"C:\\Program Files\\Python312\\Scripts\\robot.exe" -d results tests/'
+                   }
+}
 
         stage('Archive Robot Reports') {
             steps {
