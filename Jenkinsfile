@@ -1,35 +1,64 @@
 pipeline {
     agent any
 
-    tools {
-        sonarQubeScanner 'Default'
-    }
-
     environment {
-        SONAR_TOKEN = credentials('sonarqube-token') // Secret text credential ID
+        // Use Jenkins credentials ID for SonarQube token
+        SONAR_TOKEN = credentials('sonarqube-token')
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/<your-username>/<robot-framework-project>.git'
+                // Checkout source code from GitHub
+                git 'https://github.com/youruser/robot-project.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Install Robot Framework and any dependencies
+                sh 'pip3 install -r requirements.txt'
+            }
+        }
+
+        stage('Run Robot Tests') {
+            steps {
+                // Run Robot Framework tests, output to results/
+                sh 'robot --outputdir results tests/'
+            }
+        }
+
+        stage('Archive Robot Reports') {
+            steps {
+                // Archive Robot Framework output and publish test results
+                archiveArtifacts artifacts: 'results/**'
+                junit 'results/output.xml' // Converts Robot results to Jenkins test report
             }
         }
 
         stage('SonarQube Scan') {
             steps {
+                // Run SonarQube scanner with Jenkins Sonar environment
                 withSonarQubeEnv('SonarQube') {
-                    sh 'sonar-scanner -Dsonar.login=$SONAR_TOKEN'
+                    sh "sonar-scanner -Dsonar.login=$SONAR_TOKEN"
                 }
             }
         }
 
         stage('Quality Gate') {
             steps {
-                timeout(time: 2, unit: 'MINUTES') {
+                // Wait for SonarQube Quality Gate result; abort if failed
+                timeout(time: 5, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            // Cleanup or notifications here if needed
+            echo 'Pipeline finished.'
         }
     }
 }
