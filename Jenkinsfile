@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        VENV_DIR = '.venv'
+        PYTHON_HOME = tool name: 'Python3113', type: 'hudson.plugins.shiningpanda.tools.PythonInstallation'
         SONAR_SCANNER_HOME = tool 'converse_SAST'  // Jenkins global tool config
+        VENV_DIR = '.venv'
     }
 
     stages {
@@ -13,10 +14,20 @@ pipeline {
             }
         }
 
+        stage('Set Up Python & Robot') {
+            steps {
+                withEnv(["PATH=${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"]) {
+                    bat 'python --version'
+                    bat 'pip install --upgrade pip'
+                    bat 'pip install robotframework'
+                    bat 'robot --version'
+                }
+            }
+        }
+
         stage('Run Robot Tests') {
             steps {
-                withEnv(["PATH=C:\\Path\\To\\Python\\Scripts;${env.PATH}"]) {
-                    bat 'robot --version'  // Just to verify robot is found
+                withEnv(["PATH=${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"]) {
                     bat 'robot -d results tests/'
                 }
             }
@@ -35,7 +46,6 @@ pipeline {
             steps {
                 withSonarQubeEnv('MySonarQubeServer') {
                     bat """
-                        call ${VENV_DIR}\\Scripts\\activate.bat
                         ${SONAR_SCANNER_HOME}\\bin\\sonar-scanner.bat ^
                         -Dsonar.projectKey=robot-sonar-demo ^
                         -Dsonar.sources=. ^
