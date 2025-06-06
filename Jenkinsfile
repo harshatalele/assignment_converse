@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        PYTHON_HOME = tool name: 'PythonPath', type: 'hudson.plugins.shiningpanda.tools.PythonInstallation'
-        SONAR_SCANNER_HOME = tool 'converse_SAST'  // Jenkins global tool config
+        PYTHON_HOME = tool 'PythonPath'  // matches your Jenkins config
+        SONAR_SCANNER_HOME = tool 'converse_SAST'
         VENV_DIR = '.venv'
     }
 
@@ -41,7 +41,7 @@ pipeline {
 
         stage('SonarQube Scan') {
             environment {
-                SONAR_TOKEN = credentials('sonarworking') // Jenkins secret text credential
+                SONAR_TOKEN = credentials('sonarworking')
             }
             steps {
                 withSonarQubeEnv('MySonarQubeServer') {
