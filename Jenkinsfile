@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PYTHON_HOME = tool 'PythonPath'  // matches your Jenkins config
+        PYTHON_HOME = tool 'PythonPath'
         SONAR_SCANNER_HOME = tool 'converse_SAST'
         VENV_DIR = '.venv'
     }
@@ -27,14 +27,14 @@ pipeline {
         stage('Run Robot Tests') {
             steps {
                 withEnv(["PATH=${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"]) {
-                    bat 'robot -d results tests/'
+                    bat 'robot tests/'
                 }
             }
         }
 
         stage('Archive Robot Reports') {
             steps {
-                archiveArtifacts artifacts: 'results\\**\\*.*', fingerprint: true
+                archiveArtifacts artifacts: 'output.xml, report.html, log.html', fingerprint: true
             }
         }
 
