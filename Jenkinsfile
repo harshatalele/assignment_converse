@@ -12,7 +12,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/harshatalele/assignment_converse.git'
             }
         }
-    stages {
+
         stage('Run Robot Tests') {
             steps {
                 withEnv(["PATH=C:\\Path\\To\\Python\\Scripts;${env.PATH}"]) {
@@ -21,15 +21,12 @@ pipeline {
                 }
             }
         }
-    }
-
 
         stage('Archive Robot Reports') {
             steps {
                 archiveArtifacts artifacts: 'results\\**\\*.*', fingerprint: true
             }
         }
-
 
         stage('SonarQube Scan') {
             environment {
