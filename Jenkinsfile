@@ -14,8 +14,8 @@ pipeline {
         }
         stage('Check Env') {
             steps {
-                bat 'echo %PATH%'
                 bat 'where robot'
+                bat 'robot --version'
                 bat 'where python'
                    }
         }
