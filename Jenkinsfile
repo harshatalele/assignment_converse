@@ -12,17 +12,16 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/harshatalele/assignment_converse.git'
             }
         }
-        stage('Check Env') {
-            steps {
-                bat 'where robot'
-                bat 'robot --version'
-                bat 'where python'
-                   }
-        }
+    stages {
         stage('Run Robot Tests') {
             steps {
-                    bat '"C:\\Program Files\\Python312\\Scripts\\robot.exe" -d results tests/'
-                   }
+                withEnv(["PATH=C:\\Path\\To\\Python\\Scripts;${env.PATH}"]) {
+                    bat 'robot --version'  // Just to verify robot is found
+                    bat 'robot -d results tests/'
+                }
+            }
+        }
+    }
 }
 
         stage('Archive Robot Reports') {
