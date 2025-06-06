@@ -27,6 +27,7 @@ pipeline {
         stage('Run Robot Tests') {
             steps {
                 withEnv(["PATH=${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"]) {
+                    bat 'cd Automation\\SMSMagic\\robot_framework_automation && dir tests'
                     bat 'cd Automation\\SMSMagic\\robot_framework_automation && robot tests/'
                 }
             }
