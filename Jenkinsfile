@@ -15,27 +15,27 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh '''
+                bat """
                     python -m venv ${VENV_DIR}
-                    . ${VENV_DIR}/Scripts/activate
-                    pip install --upgrade pip
-                    pip install -r requirements.txt
-                '''
+                    call ${VENV_DIR}\\Scripts\\activate.bat
+                    python -m pip install --upgrade pip
+                    python -m pip install -r requirements.txt
+                """
             }
         }
 
         stage('Run Robot Tests') {
             steps {
-                sh '''
-                    . ${VENV_DIR}/Scripts/activate
+                bat """
+                    call ${VENV_DIR}\\Scripts\\activate.bat
                     robot -d results tests/
-                '''
+                """
             }
         }
 
         stage('Archive Robot Reports') {
             steps {
-                archiveArtifacts artifacts: 'results/**/*.*', fingerprint: true
+                archiveArtifacts artifacts: 'results\\**\\*.*', fingerprint: true
             }
         }
 
@@ -45,14 +45,14 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('MySonarQubeServer') {
-                    sh '''
-                        . ${VENV_DIR}/Scripts/activate
-                        ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
-                        -Dsonar.projectKey=robot-sonar-demo \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=$SONAR_HOST_URL \
-                        -Dsonar.login=$SONAR_TOKEN
-                    '''
+                    bat """
+                        call ${VENV_DIR}\\Scripts\\activate.bat
+                        ${SONAR_SCANNER_HOME}\\bin\\sonar-scanner.bat ^
+                        -Dsonar.projectKey=robot-sonar-demo ^
+                        -Dsonar.sources=. ^
+                        -Dsonar.host.url=%SONAR_HOST_URL% ^
+                        -Dsonar.login=%SONAR_TOKEN%
+                    """
                 }
             }
         }
