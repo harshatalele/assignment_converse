@@ -12,7 +12,13 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/harshatalele/assignment_converse.git'
             }
         }
-
+        stage('Check Env') {
+            steps {
+                bat 'echo %PATH%'
+                bat 'where robot'
+                bat 'where python'
+                   }
+        }
         stage('Run Robot Tests') {
             steps {
                  bat 'robot -d results tests/'
@@ -24,6 +30,7 @@ pipeline {
                 archiveArtifacts artifacts: 'results\\**\\*.*', fingerprint: true
             }
         }
+
 
         stage('SonarQube Scan') {
             environment {
