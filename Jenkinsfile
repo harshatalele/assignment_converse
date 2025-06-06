@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PYTHON_HOME = tool name: 'Python', type: 'hudson.plugins.shiningpanda.tools.PythonInstallation'
+        PYTHON_HOME = tool name: 'PythonPath', type: 'hudson.plugins.shiningpanda.tools.PythonInstallation'
         SONAR_SCANNER_HOME = tool 'converse_SAST'  // Jenkins global tool config
         VENV_DIR = '.venv'
     }
