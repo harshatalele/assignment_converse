@@ -18,7 +18,6 @@ pipeline {
             steps {
                 withEnv(["PATH=${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"]) {
                     bat 'python --version'
-                    bat 'pip install robotframework'
                     bat 'robot --version'
                 }
             }
