@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.13.3 on win32)" generated="20250607 01:04:07.255" rpa="false" schemaversion="4">
+<suite id="s1" name="Tests" source="E:\Automation\SMSMagic\robot_framework_automation\tests">
+<suite id="s1-s1" name="Test Automation" source="E:\Automation\SMSMagic\robot_framework_automation\tests\test_automation.robot">
+<test id="s1-s1-t1" name="Verify user is able to navigate to Automation page" line="14">
+<kw name="Open Browser To Login Page" library="resources" type="SETUP">
+<kw name="Set Selenium Speed" library="SeleniumLibrary">
+<arg>1</arg>
+<doc>Sets the delay that is waited after each Selenium command.</doc>
+<status status="PASS" starttime="20250607 01:04:08.994" endtime="20250607 01:04:08.994"/>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${url}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20250607 01:04:08.995" level="INFO">Opening browser 'chrome' to base url 'https://app.beconversive.com/app/#/conversive/usecase'.</msg>
+<status status="PASS" starttime="20250607 01:04:08.994" endtime="20250607 01:04:14.952"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<msg timestamp="20250607 01:04:15.023" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6036dfea5+79173]
+	GetHandleVerifier [0x0x7ff6036dff00+79264]
+	(No symbol) [0x0x7ff603499c8c]
+	(No symbol) [0x0x7ff6034e05ef]
+	(No symbol) [0x0x7ff603518832]
+	(No symbol) [0x0x7ff603513233]
+	(No symbol) [0x0x7ff6035122f9]
+	(No symbol) [0x0x7ff603465fc5]
+	GetHandleVerifier [0x0x7ff6039aa2dd+3004797]
+	GetHandleVerifier [0x0x7ff6039a472d+2981325]
+	GetHandleVerifier [0x0x7ff6039c3380+3107360]
+	GetHandleVerifier [0x0x7ff6036faa2e+188622]
+	GetHandleVerifier [0x0x7ff6037022bf+219487]
+	(No symbol) [0x0x7ff603465036]
+	GetHandleVerifier [0x0x7ff603ac3c78+4158232]
+	BaseThreadInitThunk [0x0x7ffe3dc4259d+29]
+	RtlUserThreadStart [0x0x7ffe3f10af58+40]
+</msg>
+<msg timestamp="20250607 01:04:15.024" level="FAIL">InvalidSessionIdException: Message: invalid session id: session deleted as the browser has closed the connection
+from disconnected: not connected to DevTools
+  (Session info: chrome=137.0.7151.69)
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6036dfea5+79173]
+	GetHandleVerifier [0x0x7ff6036dff00+79264]
+	(No symbol) [0x0x7ff603499e5a]
+	(No symbol) [0x0x7ff603485c25]
+	(No symbol) [0x0x7ff6034aac44]
+	(No symbol) [0x0x7ff6035203c5]
+	(No symbol) [0x0x7ff603540922]
+	(No symbol) [0x0x7ff603518743]
+	(No symbol) [0x0x7ff6034e14c1]
+	(No symbol) [0x0x7ff6034e2253]
+	GetHandleVerifier [0x0x7ff6039aa2dd+3004797]
+	GetHandleVerifier [0x0x7ff6039a472d+2981325]
+	GetHandleVerifier [0x0x7ff6039c3380+3107360]
+	GetHandleVerifier [0x0x7ff6036faa2e+188622]
+	GetHandleVerifier [0x0x7ff6037022bf+219487]
+	GetHandleVerifier [0x0x7ff6036e8df4+115860]
+	GetHandleVerifier [0x0x7ff6036e8fa9+116297]
+	GetHandleVerifier [0x0x7ff6036cf558+11256]
+	BaseThreadInitThunk [0x0x7ffe3dc4259d+29]
+	RtlUserThreadStart [0x0x7ffe3f10af58+40]
+</msg>
+<status status="FAIL" starttime="20250607 01:04:14.952" endtime="20250607 01:04:15.052"/>
+</kw>
+<kw name="Title Should Be" library="SeleniumLibrary">
+<arg>Conversive</arg>
+<doc>Verifies that the current page title equals ``title``.</doc>
+<status status="NOT RUN" starttime="20250607 01:04:15.052" endtime="20250607 01:04:15.052"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="NOT RUN" starttime="20250607 01:04:15.052" endtime="20250607 01:04:15.052"/>
+</kw>
+<status status="FAIL" starttime="20250607 01:04:08.993" endtime="20250607 01:04:15.052"/>
+</kw>
+<kw name="Close Browser" library="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<errors>
+<msg timestamp="20250607 01:04:15.023" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: Message: invalid session id
+Stacktrace:
+	GetHandleVerifier [0x0x7ff6036dfea5+79173]
+	GetHandleVerifier [0x0x7ff6036dff00+79264]
+	(No symbol) [0x0x7ff603499c8c]
+	(No symbol) [0x0x7ff6034e05ef]
+	(No symbol) [0x0x7ff603518832]
+	(No symbol) [0x0x7ff603513233]
+	(No symbol) [0x0x7ff6035122f9]
+	(No symbol) [0x0x7ff603465fc5]
+	GetHandleVerifier [0x0x7ff6039aa2dd+3004797]
+	GetHandleVerifier [0x0x7ff6039a472d+2981325]
+	GetHandleVerifier [0x0x7ff6039c3380+3107360]
+	GetHandleVerifier [0x0x7ff6036faa2e+188622]
+	GetHandleVerifier [0x0x7ff6037022bf+219487]
+	(No symbol) [0x0x7ff603465036]
+	GetHandleVerifier [0x0x7ff603ac3c78+4158232]
+	BaseThreadInitThunk [0x0x7ffe3dc4259d+29]
+	RtlUserThreadStart [0x0x7ffe3f10af58+40]
+</msg>
+<msg timestamp="20250607 01:04:17.610" level="ERROR">Execution stopped by user.</msg>
+</errors>
+</robot>

@@ -2,63 +2,67 @@ pipeline {
     agent any
 
     environment {
-        // Use Jenkins credentials ID for SonarQube token
-        SONAR_TOKEN = credentials('sonarworking')
+        VENV_DIR = '.venv'
+        SONAR_SCANNER_HOME = tool 'SonarQubeScanner'  // Jenkins global tool config
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout source code from GitHub
-                git 'https://github.com/harshatalele/assignment_converse.git'
+                git branch: 'main', url: 'https://github.com/harshatalele/assignment_converse.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                // Install Robot Framework and any dependencies
-                sh 'pip3 install -r requirements.txt'
+                sh '''
+                    python -m venv ${VENV_DIR}
+                    . ${VENV_DIR}/Scripts/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
             }
         }
 
         stage('Run Robot Tests') {
             steps {
-                // Run Robot Framework tests, output to results/
-                sh 'robot --outputdir results tests/'
+                sh '''
+                    . ${VENV_DIR}/Scripts/activate
+                    robot -d results tests/
+                '''
             }
         }
 
         stage('Archive Robot Reports') {
             steps {
-                // Archive Robot Framework output and publish test results
-                archiveArtifacts artifacts: 'results/**'
-                junit 'results/output.xml' // Converts Robot results to Jenkins test report
+                archiveArtifacts artifacts: 'results/**/*.*', fingerprint: true
             }
         }
 
         stage('SonarQube Scan') {
+            environment {
+                SONAR_TOKEN = credentials('sonarworking') // Jenkins secret text credential
+            }
             steps {
-                // Run SonarQube scanner with Jenkins Sonar environment
-                withSonarQubeEnv('SonarQube') {
-                    sh "sonar-scanner -Dsonar.login=$SONAR_TOKEN"
+                withSonarQubeEnv('MySonarQubeServer') {
+                    sh '''
+                        . ${VENV_DIR}/Scripts/activate
+                        ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+                        -Dsonar.projectKey=robot-sonar-demo \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=$SONAR_HOST_URL \
+                        -Dsonar.login=$SONAR_TOKEN
+                    '''
                 }
             }
         }
 
         stage('Quality Gate') {
             steps {
-                // Wait for SonarQube Quality Gate result; abort if failed
-                timeout(time: 5, unit: 'MINUTES') {
+                timeout(time: 2, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            // Cleanup or notifications here if needed
-            echo 'Pipeline finished.'
         }
     }
 }
