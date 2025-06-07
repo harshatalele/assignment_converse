@@ -6,7 +6,8 @@ Resource    ../../utility/robot_utilities/excelUtility.robot
 
 
 *** Variables ***
-${OPTION_TEXT}             WEB-DEMO-80051954 (Webchat)  # can be automated through excel
+#${OPTION_TEXT}             WEB-DEMO  # can be automated through excel if multiple values we can automate through excel
+${OPTION_TEXT}    //div[@id="react-select-2-listbox"]//div[contains(text(),"WEB-DEMO-") and contains(text(),"(Webchat)")]
 *** Keywords ***
 Perform automation activities
     [Documentation]    Navigate to Automation Library and verify the page heading
@@ -43,8 +44,9 @@ Perform automation task
 Select Sender ID From Dropdown
     [Documentation]    Select a sender ID from dropdown before activating automation.
     Click Element                    ${select_sender}
-    Sleep                            1s                         # Optional: give dropdown time to render
-    Click Element                    xpath=//div[contains(@class,"option") and text()="${OPTION_TEXT}"]
+#    Sleep                            1s                         # Optional: give dropdown time to render
+    Wait for element to appear on page    ${OPTION_TEXT}
+    Click Element                    ${OPTION_TEXT}
 
 Verify Account is activated
     [Documentation]    Confirm that automation activation succeeded by checking the status.

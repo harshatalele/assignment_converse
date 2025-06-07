@@ -17,7 +17,7 @@ pipeline {
         stage('Run Robot Tests') {
             steps {
                 withEnv(["PATH=${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"]) {
-                    bat 'echo Current Dir && cd && dir'
+         //           bat 'echo Current Dir && cd && dir'
                     bat 'robot tests/'
                 }
             }
