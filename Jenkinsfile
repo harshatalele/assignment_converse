@@ -28,6 +28,27 @@ pipeline {
             }
         }
 
+        stage('OWASP Dependency-Check Scan') {
+           stage('OWASP Dependency-Check Scan') {
+                steps {
+                    bat """
+                    E:\\Automation\\dependency-check\\bin\\dependency-check.bat ^
+                    --project "robot_framework_automation" ^
+                    --scan "%WORKSPACE%" ^
+                    --format "JSON" ^
+                    --out "%WORKSPACE%\\dependency-check-report"
+        """
+    }
+}
+
+        }
+
+        stage('Archive Dependency-Check Reports') {
+            steps {
+                archiveArtifacts artifacts: 'dependency-check-report/**', fingerprint: true
+            }
+        }
+
         stage('Semgrep SAST Scan') {
             steps {
                 withEnv(["PATH=${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"]) {
@@ -48,6 +69,7 @@ pipeline {
             }
         }
 
+        // Uncomment below stages if you want to include SonarQube scan & quality gate
         // stage('SonarQube Scan') {
         //     environment {
         //         SONAR_TOKEN = credentials('sonarworking')
@@ -72,5 +94,11 @@ pipeline {
         //         }
         //     }
         // }
+    }
+
+    post {
+        always {
+            dependencyCheckPublisher pattern: 'dependency-check-report/dependency-check-report.xml'
+        }
     }
 }
