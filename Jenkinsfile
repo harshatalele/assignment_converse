@@ -29,18 +29,15 @@ pipeline {
         }
 
         stage('OWASP Dependency-Check Scan') {
-           stage('OWASP Dependency-Check Scan') {
-                steps {
-                    bat """
-                    E:\\Automation\\dependency-check\\bin\\dependency-check.bat ^
-                    --project "robot_framework_automation" ^
-                    --scan "%WORKSPACE%" ^
-                    --format "JSON" ^
-                    --out "%WORKSPACE%\\dependency-check-report"
-        """
-    }
-}
-
+            steps {
+                bat """
+                E:\\Automation\\dependency-check\\bin\\dependency-check.bat ^
+                --project "robot_framework_automation" ^
+                --scan "%WORKSPACE%" ^
+                --format "JSON" ^
+                --out "%WORKSPACE%\\dependency-check-report"
+                """
+            }
         }
 
         stage('Archive Dependency-Check Reports') {
