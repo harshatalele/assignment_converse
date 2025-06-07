@@ -14,15 +14,6 @@ pipeline {
             }
         }
 
-        stage('Set Up Python & Robot') {
-            steps {
-                withEnv(["PATH=${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"]) {
-                    bat 'python --version'
-                    bat 'robot --version'
-                }
-            }
-        }
-
         stage('Run Robot Tests') {
             steps {
                 withEnv(["PATH=${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"]) {
