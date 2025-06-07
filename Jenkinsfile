@@ -34,7 +34,7 @@ pipeline {
                 SONAR_TOKEN = credentials('sonarworking')
             }
             steps {
-                withSonarQubeEnv('MySonarQubeServer') {
+                withSonarQubeEnv('sonarqubeurl') {
                     bat """
                         ${SONAR_SCANNER_HOME}\\bin\\sonar-scanner.bat ^
                         -Dsonar.projectKey=robot-sonar-demo ^
