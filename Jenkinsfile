@@ -53,6 +53,7 @@ pipeline {
                         python -m venv %VENV_DIR%
                         call %VENV_DIR%\\Scripts\\activate.bat
                         semgrep scan --config=robot_rules.yml --json > semgrep_report.json || exit 0
+                        semgrep scan --config=robot_rules.yml --html=semgrep_report.html || exit 0
                     """
                 }
             }
