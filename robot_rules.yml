@@ -1,0 +1,16 @@
+rules:
+  - id: avoid-sleep-in-robot-tests
+    patterns:
+      - pattern: |
+          Sleep    $X
+    message: "Avoid using Sleep in Robot tests; use explicit waits instead."
+    languages: [generic]
+    severity: WARNING
+
+  - id: use-log-to-record-info
+    patterns:
+      - pattern: |
+          Log    $X
+    message: "Use Log keyword to capture test info."
+    languages: [generic]
+    severity: INFO

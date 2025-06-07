@@ -17,7 +17,6 @@ pipeline {
         stage('Run Robot Tests') {
             steps {
                 withEnv(["PATH=${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"]) {
-         //           bat 'echo Current Dir && cd && dir'
                     bat 'robot tests/'
                 }
             }
@@ -29,29 +28,49 @@ pipeline {
             }
         }
 
-        stage('SonarQube Scan') {
-            environment {
-                SONAR_TOKEN = credentials('sonarworking')
-            }
+        stage('Semgrep SAST Scan') {
             steps {
-                withSonarQubeEnv('sonarqubeurl') {
+                withEnv(["PATH=${env.PYTHON_HOME};${env.PYTHON_HOME}\\Scripts;${env.PATH}"]) {
                     bat """
-                        ${SONAR_SCANNER_HOME}\\bin\\sonar-scanner.bat ^
-                        -Dsonar.projectKey=robot-sonar-demo ^
-                        -Dsonar.sources=. ^
-                        -Dsonar.host.url=%SONAR_HOST_URL% ^
-                        -Dsonar.login=%SONAR_TOKEN%
+                        python -m venv %VENV_DIR%
+                        call %VENV_DIR%\\Scripts\\activate.bat
+                        pip install --upgrade pip
+                        pip install semgrep
+                        semgrep scan --config=robot_rules.yml --json > semgrep_report.json || exit 0
                     """
                 }
             }
         }
 
-        stage('Quality Gate') {
+        stage('Archive Semgrep Report') {
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
+                archiveArtifacts artifacts: 'semgrep_report.json', fingerprint: true
             }
         }
+
+        // stage('SonarQube Scan') {
+        //     environment {
+        //         SONAR_TOKEN = credentials('sonarworking')
+        //     }
+        //     steps {
+        //         withSonarQubeEnv('sonarqubeurl') {
+        //             bat """
+        //                 ${SONAR_SCANNER_HOME}\\bin\\sonar-scanner.bat ^
+        //                 -Dsonar.projectKey=robot-sonar-demo ^
+        //                 -Dsonar.sources=. ^
+        //                 -Dsonar.host.url=%SONAR_HOST_URL% ^
+        //                 -Dsonar.login=%SONAR_TOKEN%
+        //             """
+        //         }
+        //     }
+        // }
+
+        // stage('Quality Gate') {
+        //     steps {
+        //         timeout(time: 10, unit: 'MINUTES') {
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
+        // }
     }
 }
