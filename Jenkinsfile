@@ -52,8 +52,6 @@ pipeline {
                     bat """
                         python -m venv %VENV_DIR%
                         call %VENV_DIR%\\Scripts\\activate.bat
-                        pip install --upgrade pip
-                        pip install semgrep
                         semgrep scan --config=robot_rules.yml --json > semgrep_report.json || exit 0
                     """
                 }
